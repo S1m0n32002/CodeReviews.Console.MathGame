@@ -1,35 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using static IOperator;
 internal class Subtraction : IOperator
 {
-    static readonly Random rnd = new ();
-    readonly int n1;
-    readonly int n2;
-    readonly int result;
-
     public Subtraction(Program.Difficulty Difficulty)
     {
-        switch (Difficulty)
-        {
-            case Program.Difficulty.Easy:
-                n1 = rnd.Next(0, 10);
-                n2 = rnd.Next(0, 10);
-                break;
-            case Program.Difficulty.Medium:
-                n1 = rnd.Next(0, 50);
-                n2 = rnd.Next(0, 50);
-                break;
-            case Program.Difficulty.Hard:
-                n1 = rnd.Next(0, 100);
-                n2 = rnd.Next(0, 100);
-                break;
-        }
+        InitValuesByDifficulty(Difficulty);
 
-        result = n1 - n2;
+        Result = N1 - N2;
     }
 
     /// <summary>
@@ -38,24 +14,14 @@ internal class Subtraction : IOperator
     /// <returns>String with the result of the game</returns>
     public string? StartGame()
     {
-        Console.WriteLine($"Subtract the numbers {n1} and {n2}");
+        Console.WriteLine($"Subtract the numbers {N1} and {N2}");
 
-        if (int.TryParse(Console.ReadLine(), out int Answer))
+        if (CheckAnswer(out int Answer))
         {
-            if (Answer == result)
-            {
-                Console.WriteLine("Correct");
-            }
-            else
-            {
-                Console.WriteLine($"Incorrect, the correct answer was: {result}");
-            }
-
-            return $"{n1} - {n2} = {Answer}\t(Correct result = {result})";
+            return $"{N1} - {N2} = {Answer}\t(Correct result = {Result})";
         }
         else
         {
-            Console.WriteLine("Invalid input");
             return null;
         }
     }

@@ -1,35 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using static IOperator;
 internal class Division : IOperator
 {
-    static readonly Random rnd = new ();
     readonly int dividend;
     readonly int divisor;
     readonly int result;
 
     public Division(Program.Difficulty Difficulty)
     {
-        switch (Difficulty)
-        {
-            case Program.Difficulty.Easy:
-                dividend = rnd.Next(0, 10);
-                break;
-            case Program.Difficulty.Medium:
-                dividend = rnd.Next(0, 50);
-                break;
-            case Program.Difficulty.Hard:
-                dividend = rnd.Next(0, 100);
-                break;
-        }
+        InitValuesByDifficulty(Difficulty);
+
+        dividend = N1;
 
         do
         {
             divisor = rnd.Next(1, dividend);
-        } while (dividend % divisor != 0); // && n1 == n2
+        } while (dividend % divisor != 0);
 
         result = dividend / divisor;
     }
@@ -42,22 +27,12 @@ internal class Division : IOperator
     {
         Console.WriteLine($"Division the number {dividend} by {divisor}");
 
-        if (int.TryParse(Console.ReadLine(), out int Answer))
+        if (CheckAnswer(out int Answer))
         {
-            if (Answer == result)
-            {
-                Console.WriteLine("Correct");
-            }
-            else
-            {
-                Console.WriteLine($"Incorrect, the correct answer was: {result}");
-            }
-
-            return $"{dividend} / {divisor} = {Answer}\t(Correct result = {result})";
+            return $"{N1} / {N2} = {Answer}\t(Correct result = {Result})";
         }
         else
         {
-            Console.WriteLine("Invalid input");
             return null;
         }
     }
